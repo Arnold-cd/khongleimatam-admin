@@ -882,22 +882,31 @@
 
       if (!surnameGroup) surnameGroup = surname;
 
-      const payload = {
-        community_id: commId,
-        clan_id: clanId,
-        surname: surname,
-        surname_group: surnameGroup,
-        origin: origin,
-        updated_at: new Date().toISOString()
-      };
-
+      let saveResult;
       if (selectedExistingSurnameId && currentSurnameMode === 'update') {
-        payload.id = selectedExistingSurnameId;
+        saveResult = await supabase
+          .from('surnames')
+          .update({
+            origin: origin,
+            surname_group: surnameGroup,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', selectedExistingSurnameId);
+      } else {
+        saveResult = await supabase
+          .from('surnames')
+          .insert({
+            community_id: commId,
+            clan_id: clanId,
+            surname: surname,
+            surname_group: surnameGroup,
+            origin: origin,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          });
       }
 
-      const { data, error } = await supabase
-        .from('surnames')
-        .upsert(payload, { onConflict: 'community_id,clan_id,surname' });
+      const { data, error } = saveResult;
 
       if (error) {
         alert('Error saving surname: ' + error.message);
