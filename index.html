@@ -520,7 +520,7 @@
 
           <!-- Surname Group -->
           <div class="form-group">
-            <label>Surname Group (Yumnak)</label>
+            <label>Surname Group (Yumnak )</label>
             <input type="text" id="inputSurnameGroup" class="form-control" placeholder="Defaults to surname if blank" style="text-transform: uppercase;">
           </div>
 
@@ -657,9 +657,15 @@
 
   <!-- Script & Supabase Logic -->
   <script>
-    // Supabase Configuration
-    const SUPABASE_URL = "https://bxvqrltzfzvqlxljajao.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_UKYBTdtFXAmSqdVoQ57p1g_gjz8OEWb";
+    // Supabase Configuration (Injected via GitHub Actions Secrets on deploy)
+    let SUPABASE_URL = "__SUPABASE_URL__";
+    let SUPABASE_ANON_KEY = "__SUPABASE_ANON_KEY__";
+
+    // Localhost fallback for local development if running outside GitHub Pages
+    if (SUPABASE_URL.startsWith("__") && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+      SUPABASE_URL = localStorage.getItem("LOCAL_SUPABASE_URL") || "";
+      SUPABASE_ANON_KEY = localStorage.getItem("LOCAL_SUPABASE_ANON_KEY") || "";
+    }
     
     let _supabaseClient = null;
     function getSupabase() {
