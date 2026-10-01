@@ -66,15 +66,18 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       font-size: 20px;
       font-weight: 800;
       color: var(--primary);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .brand-badge {
@@ -86,12 +89,14 @@
       border-radius: 6px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      white-space: nowrap;
     }
 
     .auth-section {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      min-width: 0;
     }
 
     .user-pill {
@@ -104,11 +109,34 @@
       border-radius: 20px;
       font-size: 13px;
       font-weight: 600;
+      min-width: 0;
+      max-width: 280px;
+    }
+
+    #userEmailText {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: inline-block;
+      max-width: 180px;
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-left: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .main-layout {
       max-width: 1200px;
-      margin: 28px auto;
+      margin: 24px auto;
       padding: 0 20px;
     }
 
@@ -161,12 +189,6 @@
       gap: 24px;
     }
 
-    @media (max-width: 900px) {
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-    }
-
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -190,9 +212,23 @@
       margin-bottom: 20px;
     }
 
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      gap: 12px;
+    }
+
     /* Forms */
     .form-group {
       margin-bottom: 18px;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
     }
 
     label {
@@ -238,7 +274,7 @@
 
     .mode-btn {
       flex: 1;
-      padding: 8px;
+      padding: 9px;
       font-size: 13px;
       font-weight: 600;
       text-align: center;
@@ -254,6 +290,126 @@
       background: var(--surface);
       color: var(--primary);
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Mobile Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-container {
+        padding: 10px 14px;
+        gap: 8px;
+      }
+
+      .brand {
+        font-size: 15px;
+        gap: 6px;
+      }
+
+      .brand-badge {
+        font-size: 9px;
+        padding: 2px 6px;
+      }
+
+      .user-pill {
+        padding: 4px 8px;
+        font-size: 11.5px;
+        gap: 6px;
+        max-width: 170px;
+      }
+
+      #userEmailText {
+        max-width: 85px;
+      }
+
+      .main-layout {
+        margin: 14px auto 30px auto;
+        padding: 0 12px;
+      }
+
+      .card {
+        padding: 16px 14px;
+        border-radius: 14px;
+      }
+
+      .card-title {
+        font-size: 16px;
+      }
+
+      .card-desc {
+        font-size: 12px;
+        margin-bottom: 14px;
+      }
+
+      .card-header-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .card-header-row input.form-control {
+        width: 100% !important;
+      }
+
+      .tabs-header {
+        gap: 4px;
+        margin-bottom: 16px;
+      }
+
+      .tab-btn {
+        padding: 10px 6px;
+        font-size: 12.5px;
+        flex: 1;
+        justify-content: center;
+        text-align: center;
+        border-bottom-width: 2.5px;
+      }
+
+      .form-row-2 {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 14px;
+      }
+
+      .form-control, select, textarea {
+        font-size: 15px; /* Prevents auto-zoom in mobile Safari */
+        padding: 11px 12px;
+      }
+
+      .mode-toggle {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .mode-btn {
+        padding: 9px;
+        font-size: 12.5px;
+      }
+
+      .btn {
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+
+      .table-container {
+        max-height: 380px;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 8px 10px;
+      }
     }
 
     .btn {
@@ -446,7 +602,7 @@
         <div id="userDisplay" class="user-pill" style="display: none;">
           <span>👤</span>
           <span id="userEmailText">admin</span>
-          <button onclick="handleLogout()" style="background: none; border: none; color: var(--primary); font-size: 12px; cursor: pointer; text-decoration: underline; margin-left: 6px;">Logout</button>
+          <button onclick="handleLogout()" class="logout-btn">Logout</button>
         </div>
         <button id="showLoginBtn" class="btn btn-primary" onclick="showLoginModal()" style="display: inline-flex; padding: 8px 16px; font-size: 13px;">
           <span>🔐</span> Login
@@ -460,10 +616,10 @@
     <!-- Navigation Tabs -->
     <div class="tabs-header">
       <button class="tab-btn active" onclick="switchTab('surnamesTab', this)">
-        <span>🪪</span> Surnames & Origin Details
+        <span>🪪</span> Surnames & Origins
       </button>
       <button class="tab-btn" onclick="switchTab('quizTab', this)">
-        <span>❓</span> Heritage Quiz Bank
+        <span>❓</span> Heritage Quiz
       </button>
     </div>
 
@@ -476,7 +632,7 @@
           <p class="card-desc">Publish new surnames or add origin history that updates the app in real time.</p>
 
           <!-- Community & Clan -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-row-2">
             <div class="form-group">
               <label>1. Community</label>
               <select id="selCommunity" onchange="onCommunityChange()">
@@ -520,7 +676,7 @@
 
           <!-- Surname Group -->
           <div class="form-group">
-            <label>Surname Group (Yumnak )</label>
+            <label>Surname Group (Yumnak)</label>
             <input type="text" id="inputSurnameGroup" class="form-control" placeholder="Defaults to surname if blank" style="text-transform: uppercase;">
           </div>
 
@@ -538,12 +694,12 @@
 
         <!-- Directory & List Card -->
         <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <div class="card-header-row">
             <div>
-              <h3 class="card-title"><span>📋</span> Surnames in Selected Clan</h3>
+              <h3 class="card-title"><span>📋</span> Surnames in Clan</h3>
               <p class="card-desc" id="surnamesCountText" style="margin-bottom: 0;">0 surnames</p>
             </div>
-            <input type="text" id="tableFilterInput" class="form-control" placeholder="Filter list..." style="width: 150px; padding: 6px 10px; font-size: 12px;" oninput="filterSurnamesTable()">
+            <input type="text" id="tableFilterInput" class="form-control" placeholder="Filter list..." style="width: 150px; padding: 7px 10px; font-size: 13px;" oninput="filterSurnamesTable()">
           </div>
 
           <div class="table-container">
@@ -572,7 +728,7 @@
           <h2 class="card-title"><span>❓</span> Add Heritage Quiz Question</h2>
           <p class="card-desc">Add verified questions that immediately appear in the daily quiz for users.</p>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="form-row-2">
             <div class="form-group">
               <label>Category</label>
               <select id="quizCategory">
@@ -628,7 +784,7 @@
 
         <!-- Quiz List -->
         <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <div class="card-header-row">
             <div>
               <h3 class="card-title"><span>📚</span> Recent Quiz Questions</h3>
               <p class="card-desc" id="quizCountText" style="margin-bottom: 0;">Loaded from database</p>
