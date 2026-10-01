@@ -661,19 +661,19 @@
     const SUPABASE_URL = "https://bxvqrltzfzvqlxljajao.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_UKYBTdtFXAmSqdVoQ57p1g_gjz8OEWb";
     
-    let supabase = null;
+    let _supabaseClient = null;
     function getSupabase() {
-      if (!supabase) {
+      if (!_supabaseClient) {
         try {
           const factory = window.supabase || window.supabaseJs;
           if (factory && typeof factory.createClient === 'function') {
-            supabase = factory.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            _supabaseClient = factory.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
           }
         } catch (e) {
           console.error("Supabase init error:", e);
         }
       }
-      return supabase;
+      return _supabaseClient;
     }
 
     const DEFAULT_CLANS_MAP = {
